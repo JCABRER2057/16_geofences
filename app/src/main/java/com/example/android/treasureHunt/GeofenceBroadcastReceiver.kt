@@ -40,7 +40,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         // TODO: Step 11 implement the onReceive method
         //A Broadcast Receiver can receive many types of actions
         if (intent.action == ACTION_GEOFENCE_EVENT) {
-            //eate a variable called geofencingEvent and initialize it to GeofencingEvent with the intent passed in to the onReceive() method.
+            //Create a variable called geofencingEvent and initialize it to GeofencingEvent with the intent passed in to the onReceive() method.
             val geofencingEvent = GeofencingEvent.fromIntent(intent)
 
             if (geofencingEvent.hasError()) {

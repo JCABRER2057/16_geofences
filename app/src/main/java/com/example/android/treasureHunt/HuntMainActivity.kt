@@ -62,8 +62,7 @@ class HuntMainActivity : AppCompatActivity() {
     private lateinit var viewModel: GeofenceViewModel
 
     // TODO: Step 2 add in variable to check if device is running Q or later
-    private val runningQOrLater =
-        android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
+    private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
     // A PendingIntent for the Broadcast Receiver that handles geofence transitions.
     // TODO: Step 8 add in a pending intent
     private val geofencePendingIntent: PendingIntent by lazy {
@@ -195,7 +194,6 @@ class HuntMainActivity : AppCompatActivity() {
             priority = LocationRequest.PRIORITY_LOW_POWER
         }
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-
         //Next, use LocationServices to get the Settings Client and create a val called locationSettingsResponseTask to check the location settings.
         val settingsClient = LocationServices.getSettingsClient(this)
         val locationSettingsResponseTask = settingsClient.checkLocationSettings(builder.build())
@@ -215,11 +213,11 @@ class HuntMainActivity : AppCompatActivity() {
                 //If the exception is not of type ResolvableApiException, present a snackbar that alerts the user that location needs to be enabled to play the treasure hunt.
             } else {
                 Snackbar.make(
-                    binding.activityMapsMain,
-                    R.string.location_required_error, Snackbar.LENGTH_INDEFINITE
-                ).setAction(android.R.string.ok) {
-                    checkDeviceLocationSettingsAndStartGeofence()
-                }.show()
+                    binding.activityMapsMain, R.string.location_required_error, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok)
+                    {
+                        checkDeviceLocationSettingsAndStartGeofence()
+                    }.show()
             }
         }
         //If the locationSettingsResponseTask does complete, check that it is successful, if so you will want to add the geofence.
@@ -238,20 +236,14 @@ class HuntMainActivity : AppCompatActivity() {
     private fun foregroundAndBackgroundLocationPermissionApproved(): Boolean {
         // TODO: Step 3 replace this with code to check that the foreground and background
         //  permissions were approved
-        val foregroundLocationApproved =
-            (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ))
-        val backgroundPermissionApproved =
-            if (runningQOrLater) {
-                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-            } else {
+        val foregroundLocationApproved = (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION))
+        val backgroundPermissionApproved = if (runningQOrLater)
+        {
+                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        } else
+        {
                 true
-            }
+        }
         return foregroundLocationApproved && backgroundPermissionApproved
     }
 
